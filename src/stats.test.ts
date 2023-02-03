@@ -1,23 +1,30 @@
-import { average, sum } from "./stats";
+import {average, sum} from "./stats";
+import * as statsAsync from "./statsAsync";
 
-let result
-let expected
+import {expect, test} from "./testLib";
 
-result = sum([1, 2, 3])
-expected = 6
+test('calculate the sum of all elements of the array', () => {
+  const result = sum([1, 2, 3])
+  const expected = 6
+  expect(expected).toBe(result)
+})
 
-if(result === expected) {
-  console.log('Success!')
-} else {
-  throw new Error(`${result} is not equal to ${expected}`)
-}
+test('calculates the average of all elements of the array', () => {
+  const result = average([1, 2, 3])
+  const expected = 2
+  expect(expected).toBe(result)
+})
 
-result = average([1, 2, 3])
-expected = 2
+test('calculate the sum of all elements of the array async', async() => {
+  const result = await statsAsync.sum([1, 2, 3])
+  const expected = 6
+  expect(expected).toBe(result)
+})
 
-if(result === expected) {
-  console.log('Success!')
-} else {
-  throw new Error(`${result} is not equal to ${expected}`)
-}
+test('calculates the average of all elements of the array async', async() => {
+  const result = await statsAsync.average([1, 2, 3])
+  const expected = 2
+  expect(expected).toBe(result)
+})
+
 

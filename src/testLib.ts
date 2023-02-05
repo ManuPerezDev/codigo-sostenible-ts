@@ -17,3 +17,11 @@ export async function test(description, callback: () => void) {
     console.log(error)
   }
 }
+
+export const it = test
+
+export function describe(description: string, callback: () => void) {
+  console.log(description)
+  callback()
+}
+

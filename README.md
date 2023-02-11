@@ -61,5 +61,29 @@ npm i -D jest ts-jest @types/jest
 npx ts-jest config:init
 ```
 
+### Principios 
 
+En cada test buscamos un equilibrio en la combinación de atributos como:
+
+- Velocidad
+- Granularidad
+- Independencia
+- Inocuidad
+- Acoplamiento
+- Fragilidad
+- Flexibilidad
+- Fiabilidad
+- Complejidad
+- Expresividad
+- Determinismo
+- Exclusividad
+- Trazabilidad
+
+Existen varios acrónimos que nos pueden ayudar a recordar las características deseables de los test. Uno de ellos es FIRST:
+
+- Fast (rápido)
+- Independent (independiente)
+- Repeatable (repetible)
+- Self-validated (auto-validado)
+- Timely (oportuno)
 

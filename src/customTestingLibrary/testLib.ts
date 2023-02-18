@@ -25,3 +25,17 @@ export function describe(description: string, callback: () => void) {
   callback()
 }
 
+export function expectThatList<T>(list: T[]) {
+  return listMatchers(list);
+}
+
+function listMatchers<T>(list: T[]) {
+  return {
+    isExactly(...items: T[]) {
+      expect(items.length).toBe(list.length);
+      items.forEach((_, i) => {
+        expect(items[i]).toBe(list[i]);
+      });
+    },
+  };
+}

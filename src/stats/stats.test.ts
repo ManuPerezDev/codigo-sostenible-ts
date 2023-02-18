@@ -1,5 +1,5 @@
-import {average, sum} from "../stats";
-import * as statsAsync from "../statsAsync";
+import {average, sum} from "./stats";
+import * as statsAsync from "./statsAsync";
 
 describe('Stats should', () => {
   test('calculate the sum of all elements of the array', () => {

@@ -5,19 +5,19 @@
 // “foo” ⇒ “Foo”
 // “foo_bar foo-bar” ⇒ “FooBarFooBar”
 
-import {camelCaseConverter} from "./camelCaseConverter";
+import { camelCaseConverter } from "./camelCaseConverter";
 
 describe('camelCaseConverter should', () => {
-  it('return same string', () => {
+  it('not convert a single word or empty text', () => {
     expect(camelCaseConverter('')).toBe('')
     expect(camelCaseConverter('Foo')).toBe('Foo')
   });
 
-  it('remove white spaces', () => {
+  it('join words removing white spaces', () => {
     expect(camelCaseConverter('Foo Bar')).toBe('FooBar')
   });
 
-  it('remove hyphen and underscore', () => {
+  it('join words removing hyphen and underscore', () => {
     expect(camelCaseConverter('Foo_Bar-Foo')).toBe('FooBarFoo')
   });
 
@@ -25,7 +25,7 @@ describe('camelCaseConverter should', () => {
     expect(camelCaseConverter('foo')).toBe('Foo')
   });
 
-  it('return camel case with all cases', () => {
+  it('convert to camel case combining all cases', () => {
     expect(camelCaseConverter('foo_bar foo-bar')).toBe('FooBarFooBar')
   });
 });

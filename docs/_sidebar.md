@@ -1,2 +1,3 @@
 - [Módulo 1](module1.md)
+- [Módulo 2](module2.md)
 - [Docsify](docsify.md)

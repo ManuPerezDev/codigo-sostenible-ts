@@ -11,11 +11,11 @@ class StringCalculator {
     if (!expression) { return 0; }
 
     if(expression.includes('/')) {
-      const separatorExpression = expression.substring(0, 3)
-      const separator = separatorExpression.charAt(2)
-      const restExpression = expression.substring(4, expression.length)
+      const matchedExpression = expression.match(/^\/\/(.*)\/(.*)/)
+      const separator = matchedExpression[1]
+      const onlyNumbersExpression = matchedExpression[2]
 
-      const numbers = restExpression.split(separator).filter(char => Number(char))
+      const numbers = onlyNumbersExpression.split(separator).filter(char => Number(char))
       return numbers.reduce((acc, curr) => acc + Number(curr), 0);
     }
 

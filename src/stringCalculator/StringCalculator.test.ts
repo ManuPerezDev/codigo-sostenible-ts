@@ -10,18 +10,28 @@ class StringCalculator {
   static add(expression: string) {
     if (!expression) { return 0; }
 
-    if(expression.includes('/')) {
+    if(this.hasCustomSeparator(expression)) {
       const matchedExpression = expression.match(/^\/\/(.*)\/(.*)/)
       const separator = matchedExpression[1]
       const onlyNumbersExpression = matchedExpression[2]
-
-      const numbers = onlyNumbersExpression.split(separator).filter(char => Number(char))
-      return numbers.reduce((acc, curr) => acc + Number(curr), 0);
+      const numbers = this.getNumbersFrom(onlyNumbersExpression, separator);
+      return this.sum(numbers);
     }
 
-    const separator = ',';
-    const numbers = expression.split(separator).filter(char => Number(char))
+    const numbers = this.getNumbersFrom(expression);
+    return this.sum(numbers);
+  }
+
+  private static hasCustomSeparator(expression: string) {
+    return expression.includes('/');
+  }
+
+  private static sum(numbers: string[]) {
     return numbers.reduce((acc, curr) => acc + Number(curr), 0);
+  }
+
+  private static getNumbersFrom(onlyNumbersExpression: string, separator: string = ',') {
+    return onlyNumbersExpression.split(separator).filter(char => Number(char));
   }
 }
 

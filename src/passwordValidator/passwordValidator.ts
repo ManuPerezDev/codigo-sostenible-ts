@@ -7,26 +7,21 @@ export function passwordValidator(password: string) {
 }
 
 function containsNonCapitalLetter(password: string) {
-  const containsNonCapitalLetter = Boolean(password.match(/[a-z]/g))
-  return containsNonCapitalLetter;
+  return /[a-z]/.test(password);
 }
 
 function containsCapitalLetter(password: string) {
-  const containsCapitalLetter = Boolean(password.match(/[A-Z]/g))
-  return containsCapitalLetter;
+  return /[A-Z]/.test(password);
 }
 
 function containsUnderscore(password: string) {
-  const containsUnderscore = Boolean(password.match(/_/g))
-  return containsUnderscore;
+  return /_/.test(password);
 }
 
 function containsAtLeastOneNumber(password: string) {
-  const containsAtLeastOneNumber = Boolean(password.match(/[0-9]/g))
-  return containsAtLeastOneNumber;
+  return /[0-9]/.test(password);
 }
 
 function containsMoreThanSixCharacters(password: string) {
-  const containsMoreThanSixCharacters = password.length >= 6;
-  return containsMoreThanSixCharacters;
+  return password.length >= 6;
 }

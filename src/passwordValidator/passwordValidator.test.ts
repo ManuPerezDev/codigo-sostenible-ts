@@ -1,23 +1,10 @@
+import { passwordValidator } from "./passwordValidator";
 
 // Tener una longitud de al menos seis caracteres
 // Contener algún número
 // Contener alguna letra mayúscula
 // Contener alguna letra minúscula
 // Contener algún guion bajo
-
-function passwordValidator(password: string) {
-  const containsMoreThanSixCharacters = password.length >= 6;
-  const containsAtLeastOneNumber = Boolean(password.match(/[0-9]/g))
-  const containsUnderscore = Boolean(password.match(/_/g))
-  const containsCapitalLetter = Boolean(password.match(/[A-Z]/g))
-  const containsNonCapitalLetter = Boolean(password.match(/[a-z]/g))
-
-  return containsMoreThanSixCharacters &&
-    containsAtLeastOneNumber &&
-    containsUnderscore &&
-    containsCapitalLetter &&
-    containsNonCapitalLetter
-}
 
 describe('passwordValidator should', () => {
   it('validates a password with all requirements', () => {

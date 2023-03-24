@@ -44,18 +44,29 @@ function csvFiler(csv: string) {
 function getFilteredInvoices(invoices: string[]) {
   return invoices.reduce((acc, invoice) => {
     const invoiceFields = invoice.split(',')
-    const iva = invoiceFields[4]
-    const igic = invoiceFields[5]
-    const gross = invoiceFields[2]
-    const net = invoiceFields[3]
-    if (iva && igic) {
+    if (thereArePresentBothTaxes(invoiceFields)) {
       return acc
     }
-    if((Number(gross) - (Number(gross) * ((Number(iva)) / 100)) !== Number(net) )) {
+    if(netIsWrong(invoiceFields)) {
       return acc
     }
     return [...acc, invoice]
   }, []);
+}
+
+function thereArePresentBothTaxes(invoiceFields: string[]) {
+  const iva = invoiceFields[4]
+  const igic = invoiceFields[5]
+  return iva && igic;
+}
+
+function netIsWrong(invoiceFields: string[]) {
+  const iva = invoiceFields[4]
+  const igic = invoiceFields[5]
+  const gross = Number(invoiceFields[2])
+  const net = Number(invoiceFields[3])
+  const presentTax = Number(iva || igic)
+  return gross - (gross * (presentTax / 100)) !== net;
 }
 
 describe('CsvFilter should', () => {

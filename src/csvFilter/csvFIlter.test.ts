@@ -49,18 +49,26 @@ function getFilteredInvoices(invoices: string[]) {
     if (iva && igic) {
       return acc
     }
+
     return [...acc, invoice]
   }, []);
 }
 
 describe('CsvFilter should', () => {
   it('not filter a invoice without errors',  () => {
-    const csv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente\n1,02/05/2019,1008,810,19,,ACERLaptop,B76430134,';
+    const csv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente\n1,02/05/2019,1008,816.48,19,,ACERLaptop,B76430134,';
     expect(csvFiler(csv)).toBe(csv)
   });
 
   it('filter an invoce if iva and igic are present at the same time', () => {
-    const csv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente\n1,02/05/2019,1008,810,19,8,ACERLaptop,B76430134,'
+    const csv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente\n1,02/05/2019,1008,816.48,19,8,ACERLaptop,B76430134,'
+
+    const expectedFilteredCsv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente';
+    expect(csvFiler(csv)).toBe(expectedFilteredCsv)
+  });
+
+  it('filter and invoice when the net is wrong',  () => {
+    const csv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente\n1,02/05/2019,1008,1008,19,,ACERLaptop,B76430134,'
 
     const expectedFilteredCsv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente';
     expect(csvFiler(csv)).toBe(expectedFilteredCsv)

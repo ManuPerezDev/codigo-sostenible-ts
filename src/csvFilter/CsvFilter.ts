@@ -1,85 +1,67 @@
-import {Csv} from "./Csv";
+import { Csv } from "./Csv";
+import { Invoice } from "./Invoice";
 
 export class CsvFilter {
   run(csv: Csv) {
-    const header = csv.getHeader()
-    const invoices = csv.getInvoices()
-
-    if (this.doesNotHaveHeaders(header)) {
+    if (!csv.hasHeader('Num_factura')) {
       throw Error('Missing headers.')
     }
-
+    const invoices = csv.getRows().map(row => Invoice.fromCsvRow(row));
     const filteredInvoices = this.getFilteredInvoices(invoices)
 
-    return [header, ...filteredInvoices].join('\n')
+    const csvRows = filteredInvoices.map(invoice => invoice.toCsvRow())
+
+    return [csv.getHeader(), ...csvRows].join('\n')
   }
 
-
-  private doesNotHaveHeaders(csv: string) {
-    return !csv.includes('Num_factura')
-  }
-
-
-  private getFilteredInvoices(invoices: string[]) {
-
+  private getFilteredInvoices(invoices: Invoice[]) {
     const filteredInvoices = invoices.reduce((acc, invoice) => {
-      const invoiceFields = invoice.split(',')
-      if (this.thereArePresentBothTaxes(invoiceFields)) {
+      if (this.thereArePresentBothTaxes(invoice)) {
         return acc
       }
-      if(this.netIsWrong(invoiceFields)) {
+      if(this.netIsWrong(invoice)) {
         return acc
       }
-      if(this.thereArePresentBothIdentifications(invoiceFields)) {
+      if(this.thereArePresentBothIdentifications(invoice)) {
         return acc
       }
       return [...acc, invoice]
     }, []);
 
+
+
     return this.removeDuplicates(filteredInvoices)
   }
 
-  private removeDuplicates(filteredInvoices: string[]) {
+  private removeDuplicates(filteredInvoices: Invoice[]) {
     const invoicesCounter = {}
     filteredInvoices.forEach(invoice => {
-      const invoiceFields = invoice.split(',')
-      const invoiceId = invoiceFields[0]
-      if(invoicesCounter[invoiceId]) {
-        invoicesCounter[invoiceId] += 1
+      if(invoicesCounter[invoice.id]) {
+        invoicesCounter[invoice.id] += 1
       } else {
-        invoicesCounter[invoiceId] = 1
+        invoicesCounter[invoice.id] = 1
       }
     })
 
     return filteredInvoices.reduce((acc, invoice) => {
-      const invoiceFields = invoice.split(',')
-      const invoiceId = invoiceFields[0]
+      const invoiceId = invoice.id
       if(invoicesCounter[invoiceId] >= 2) {
-        return acc.filter(invoice => invoice[0] !== invoiceId)
+        return acc.filter(invoice => invoice.id !== invoiceId)
       }
       return acc
     }, filteredInvoices)
   }
 
-  private thereArePresentBothTaxes(invoiceFields: string[]) {
-    const iva = invoiceFields[4]
-    const igic = invoiceFields[5]
-    return iva && igic;
+  private thereArePresentBothTaxes(invoice: Invoice) {
+    return invoice.iva && invoice.igic;
   }
 
-  private netIsWrong(invoiceFields: string[]) {
-    const iva = invoiceFields[4]
-    const igic = invoiceFields[5]
-    const gross = Number(invoiceFields[2])
-    const net = Number(invoiceFields[3])
-    const presentTax = Number(iva || igic)
-    return gross - (gross * (presentTax / 100)) !== net;
+  private netIsWrong(invoice: Invoice) {
+    const presentTax = invoice.iva || invoice.igic
+    return invoice.gross - (invoice.gross * (presentTax / 100)) !== invoice.net;
   }
 
-  private thereArePresentBothIdentifications(invoiceFields: string[]) {
-    const CIF = invoiceFields[7]
-    const NIF = invoiceFields[8]
-    return CIF && NIF
+  private thereArePresentBothIdentifications(invoice: Invoice) {
+    return invoice.CIF && invoice.NIF
   }
 }
-

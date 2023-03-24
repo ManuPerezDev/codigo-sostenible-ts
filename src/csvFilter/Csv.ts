@@ -9,8 +9,12 @@ export class Csv {
     return this.csv.split('\n')[0]
   }
 
-  getInvoices() {
+  getRows() {
     return this.csv.split('\n').slice(1)
+  }
+
+  hasHeader(header: string) {
+    return this.csv.includes(header)
   }
 
   value() {

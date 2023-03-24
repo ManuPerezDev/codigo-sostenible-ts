@@ -43,7 +43,7 @@ function csvFiler(csv: string) {
 
 
 function getFilteredInvoices(invoices: string[]) {
-  const filteredInvoices = invoices.reduce((acc, invoice) => {
+  return removeDuplicates(invoices).reduce((acc, invoice) => {
     const invoiceFields = invoice.split(',')
     if (thereArePresentBothTaxes(invoiceFields)) {
       return acc
@@ -56,8 +56,6 @@ function getFilteredInvoices(invoices: string[]) {
     }
     return [...acc, invoice]
   }, []);
-
-  return removeDuplicates(filteredInvoices)
 }
 
 function removeDuplicates(filteredInvoices: string[]) {

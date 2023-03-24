@@ -34,11 +34,19 @@
  */
 
 function csvFiler(csv: string) {
+  if(doesNotHaveHeaders(csv)) {
+    throw Error('Missing headers.')
+  }
+
   const [header, ...invoices] = csv.split('\n')
 
   const filteredInvoices = getFilteredInvoices(invoices)
 
   return [header, ...filteredInvoices].join('\n')
+}
+
+function doesNotHaveHeaders(csv: string) {
+  return !csv.includes('Num _factura')
 }
 
 
@@ -136,5 +144,10 @@ describe('CsvFilter should', () => {
 
     const expectedFilteredCsv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente';
     expect(csvFiler(csv)).toBe(expectedFilteredCsv)
+  });
+
+  it('send an error if there is no headers',  () => {
+    expect(() => csvFiler('1,02/05/2019,1008,1008,19,,ACERLaptop,B76430134,45345666Y')).toThrowError('Missing headers.')
+
   });
 });

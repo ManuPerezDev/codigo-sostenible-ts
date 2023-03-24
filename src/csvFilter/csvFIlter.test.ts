@@ -34,29 +34,32 @@
  */
 
 function csvFiler(csv: string) {
-  const rows = csv.split('\n')
-  const [header, ...invoices] = rows
+  const [header, ...invoices] = csv.split('\n')
 
-  const filteredInvoices = invoices.reduce((acc, invoice) => {
-    const invoiceFields = invoice.split(',')
-    const iva = invoiceFields[4]
-    const igic = invoiceFields[5]
-    if(iva && igic) {
-      return acc
-    }
-    return [...acc, invoice]
-  }, [])
+  const filteredInvoices = getFilteredInvoices(invoices)
 
   return [header, ...filteredInvoices].join('\n')
 }
 
+function getFilteredInvoices(invoices: string[]) {
+  return invoices.reduce((acc, invoice) => {
+    const invoiceFields = invoice.split(',')
+    const iva = invoiceFields[4]
+    const igic = invoiceFields[5]
+    if (iva && igic) {
+      return acc
+    }
+    return [...acc, invoice]
+  }, []);
+}
+
 describe('CsvFilter should', () => {
-  it('should not filter a invoice without errors',  () => {
+  it('not filter a invoice without errors',  () => {
     const csv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente\n1,02/05/2019,1008,810,19,,ACERLaptop,B76430134,';
     expect(csvFiler(csv)).toBe(csv)
   });
 
-  it('should filter an invoce if iva and igic are present at the same time', () => {
+  it('filter an invoce if iva and igic are present at the same time', () => {
     const csv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente\n1,02/05/2019,1008,810,19,8,ACERLaptop,B76430134,'
 
     const expectedFilteredCsv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente';

@@ -1,10 +1,13 @@
+import {Csv} from "./Csv";
+
 export class CsvFilter {
-  run(csv: string) {
-    if (this.doesNotHaveHeaders(csv)) {
+  run(csv: Csv) {
+    const header = csv.getHeader()
+    const invoices = csv.getInvoices()
+
+    if (this.doesNotHaveHeaders(header)) {
       throw Error('Missing headers.')
     }
-
-    const [header, ...invoices] = csv.split('\n')
 
     const filteredInvoices = this.getFilteredInvoices(invoices)
 

@@ -6,29 +6,25 @@ export class CsvFilter {
     if (!csv.hasHeader('Num_factura')) {
       throw Error('Missing headers.')
     }
-    const invoices = csv.getRows().map(row => Invoice.fromCsvRow(row));
+    const invoices = Invoice.invoicesFromCsv(csv)
     const filteredInvoices = this.getFilteredInvoices(invoices)
-
     const csvRows = filteredInvoices.map(invoice => invoice.toCsvRow())
-
     return [csv.getHeader(), ...csvRows].join('\n')
   }
 
   private getFilteredInvoices(invoices: Invoice[]) {
     const filteredInvoices = invoices.reduce((acc, invoice) => {
-      if (this.thereArePresentBothTaxes(invoice)) {
+      if (invoice.hasTwoTaxes()) {
         return acc
       }
-      if(this.netIsWrong(invoice)) {
+      if(invoice.netIsWrong()) {
         return acc
       }
-      if(this.thereArePresentBothIdentifications(invoice)) {
+      if(invoice.hasTwoIdentifications()) {
         return acc
       }
       return [...acc, invoice]
     }, []);
-
-
 
     return this.removeDuplicates(filteredInvoices)
   }
@@ -50,18 +46,5 @@ export class CsvFilter {
       }
       return acc
     }, filteredInvoices)
-  }
-
-  private thereArePresentBothTaxes(invoice: Invoice) {
-    return invoice.iva && invoice.igic;
-  }
-
-  private netIsWrong(invoice: Invoice) {
-    const presentTax = invoice.iva || invoice.igic
-    return invoice.gross - (invoice.gross * (presentTax / 100)) !== invoice.net;
-  }
-
-  private thereArePresentBothIdentifications(invoice: Invoice) {
-    return invoice.CIF && invoice.NIF
   }
 }

@@ -1,3 +1,5 @@
+import {Csv} from "./Csv";
+
 export class Invoice {
   id: string;
   gross: number;
@@ -57,6 +59,24 @@ export class Invoice {
       return {...acc, [key]: this[key]}
     }, {} as InvoicePrimitive)
     return valuesWithoutZeros;
+  }
+
+  hasTwoTaxes() {
+    return this.iva && this.igic;
+  }
+
+  hasTwoIdentifications() {
+    return this.CIF && this.NIF;
+  }
+
+  netIsWrong() {
+    const presentTax = this.iva || this.igic
+    return this.gross - (this.gross * (presentTax / 100)) !== this.net;
+  }
+
+  static invoicesFromCsv(csv: Csv) {
+    const csvRows = csv.getRows();
+    return csvRows.map(row => Invoice.fromCsvRow(row));
   }
 }
 

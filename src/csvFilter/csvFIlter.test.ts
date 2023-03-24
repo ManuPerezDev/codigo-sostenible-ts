@@ -104,4 +104,11 @@ describe('CsvFilter should', () => {
     const expectedFilteredCsv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente';
     expect(csvFiler(csv)).toBe(expectedFilteredCsv)
   });
+
+  it('filter the invoices which have the same identification',  () => {
+    const csv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente\n1,02/05/2019,1008,816.48,19,,ACERLaptop,B76430134,\n1,02/05/2019,1008,1008,19,,ACERLaptop,B76430134,'
+
+    const expectedFilteredCsv = 'Num _factura, Fecha, Bruto, Neto, IVA, IGIC, Concepto, CIF_cliente, NIF_cliente';
+    expect(csvFiler(csv)).toBe(expectedFilteredCsv)
+  });
 });

@@ -50,6 +50,9 @@ function getFilteredInvoices(invoices: string[]) {
     if(netIsWrong(invoiceFields)) {
       return acc
     }
+    if(thereArePresentBothIdentifications(invoiceFields)) {
+      return acc
+    }
     return [...acc, invoice]
   }, []);
 }
@@ -67,6 +70,12 @@ function netIsWrong(invoiceFields: string[]) {
   const net = Number(invoiceFields[3])
   const presentTax = Number(iva || igic)
   return gross - (gross * (presentTax / 100)) !== net;
+}
+
+function thereArePresentBothIdentifications(invoiceFields: string[]) {
+  const CIF = invoiceFields[7]
+  const NIF = invoiceFields[8]
+  return CIF && NIF
 }
 
 describe('CsvFilter should', () => {

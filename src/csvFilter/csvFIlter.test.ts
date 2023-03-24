@@ -46,10 +46,14 @@ function getFilteredInvoices(invoices: string[]) {
     const invoiceFields = invoice.split(',')
     const iva = invoiceFields[4]
     const igic = invoiceFields[5]
+    const gross = invoiceFields[2]
+    const net = invoiceFields[3]
     if (iva && igic) {
       return acc
     }
-
+    if((Number(gross) - (Number(gross) * ((Number(iva)) / 100)) !== Number(net) )) {
+      return acc
+    }
     return [...acc, invoice]
   }, []);
 }

@@ -7,10 +7,10 @@
  * x6 - ('This is a template with one ${variable} and the same variable ${variable}', {variable: 'hola'}) => 'This is a template with one hola and the same variable hola'
  * x7 - ('This is a template with one ${variable} and another ${other-variable}', {variable: 'hola', 'not-coincidence-variable': 'adios'}) => throw MissingDictionaryKeyError
  */
-import { TemplateEngine } from "./TemplateEngine";
-import { NoDictionaryProvidedError } from "./NoDictionaryProvidedError";
-import { TemplateMarkedTextError } from "./TemplateMarkedTextError";
-import { MissingDictionaryKeyError } from "./MissingDictionaryKeyError";
+import { TemplateEngine } from "./src/TemplateEngine";
+import { NoDictionaryProvidedError } from "./src/NoDictionaryProvidedError";
+import { TemplateMarkedTextError } from "./src/TemplateMarkedTextError";
+import { MissingDictionaryKeyError } from "./src/MissingDictionaryKeyError";
 
 describe('TemplateEngine should', () => {
   it('fill an marked text ',  () => {

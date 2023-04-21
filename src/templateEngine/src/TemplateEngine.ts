@@ -3,10 +3,7 @@ import { Template } from "./Template";
 import { Dictionary } from "./Dictionary";
 
 export class TemplateEngine {
-  static fill(rawTemplate: string, rawDictionary: { [key: string]: string }) {
-    const template = Template.createValidTemplate(rawTemplate)
-    const dictionary = Dictionary.createValidDictionary(rawDictionary)
-
+  static fill(template: Template, dictionary: Dictionary) {
     let filledTemplate = this.fillTemplate(template, dictionary);
 
     if (this.thereAreRemainingMarkedText(filledTemplate)) {

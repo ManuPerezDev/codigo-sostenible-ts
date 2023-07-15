@@ -8,28 +8,72 @@
 // wordWrap(null,5) ⇒ ''
 // wordWrap('hello',-5) ⇒ throw exception
 
-function wordWrap(expression: string, columnSize: number) {
-  if(columnSize < 0) {
-    throw new Error('Column size not allowed.')
+function wordWrapNoPrimitives(expression: Expression, columnWidth: ColumnWidth) {
+  if (!expression.isLargerThan(columnWidth)) {
+    return expression.value()
   }
 
-  if(!expression) {
-    return ''
-  }
-
-  if(expression.length > columnSize) {
-    if(expression[0] === ' ') {
-      const part1 = expression.slice(1, columnSize + 1).trim()
-      const part2 = expression.slice(columnSize + 1, expression.length)
-      return  '\n' + part1 + '\n' + part2
-    }
-    const part1 = expression.slice(0, columnSize).trim()
-    const part2 = expression.slice(columnSize, expression.length)
-
-    return part1 + '\n' + wordWrap(part2, columnSize)
-  }
-  return expression
+  return expression.wrap(columnWidth) + '\n' + wordWrap(expression.toWrap(columnWidth), columnWidth.value())
 }
+
+function wordWrap(expression: string, columnWidth: number) {
+  return wordWrapNoPrimitives(Expression.create(expression), ColumnWidth.create(columnWidth))
+}
+
+class ColumnWidth {
+  private constructor(private columnWidth: number) { }
+
+  static create(columnWidth: number) {
+    if(columnWidth < 0) {
+      throw new Error('Column size not allowed.')
+    }
+    return new ColumnWidth(columnWidth)
+  }
+
+  value() {
+      return this.columnWidth
+  }
+}
+
+class Expression {
+  private constructor(private expression: string) {}
+
+  static create(expression: string) {
+    if (!expression) {
+      return new Expression('')
+    }
+
+    return new Expression(expression)
+  }
+
+  isLargerThan(columnWidth: ColumnWidth) {
+    return this.expression.length > columnWidth.value()
+  }
+
+  isFirstCharacterAnSpace() {
+    return this.expression[0] === ' '
+  }
+
+  wrap(columnWidth: ColumnWidth) {
+    if(this.isFirstCharacterAnSpace()) {
+      return '\n' + this.expression.slice(1, columnWidth.value() + 1).trim()
+    }
+    return this.expression.slice(0, columnWidth.value()).trim()
+  }
+
+  toWrap(columnWidth: ColumnWidth) {
+    if(this.isFirstCharacterAnSpace()) {
+      return this.expression.slice(columnWidth.value() + 1, this.expression.length)
+    }
+    return this.expression.slice(columnWidth.value(), this.expression.length)
+
+  }
+
+  value() {
+    return this.expression
+  }
+}
+
 
 describe('WordWrap should', () => {
   it('should not wrap an empty expression',  () => {

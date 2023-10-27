@@ -8,23 +8,47 @@ export class Rover {
   }
 
   execute(commands: Command[]): void {
-    commands.forEach(command => command.execute(this))
+    commands.forEach(command => {
+      if (command.isMoveForward()) {
+        this.moveForward()
+        return
+      }
+      if (command.isMoveBackward()) {
+        this.moveBackward()
+        return
+      }
+      if (command.isTurnRight()) {
+        this.turnRight()
+        return
+      }
+      if (command.isTurnLeft()) {
+        this.turnLeft()
+        return
+      }
+    })
+  }
+
+  private moveForward() {
+    this.position = this.getDirection().moveForward(this.getPosition())
+  }
+
+  private moveBackward() {
+    this.position = this.getDirection().moveBackward(this.getPosition())
+  }
+
+  private turnRight() {
+    this.direction = this.getDirection().turnRight()
+  }
+
+  private turnLeft() {
+    this.direction = this.getDirection().turnLeft()
   }
 
   getPosition() {
     return this.position
   }
 
-  setPosition(position: Position) {
-    this.position = position
-
-  }
-
   getDirection() {
     return this.direction
-  }
-
-  setDirection(direction: Direction) {
-    this.direction = direction
   }
 }

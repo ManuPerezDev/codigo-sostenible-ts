@@ -1,8 +1,7 @@
 import {Command} from "./Command";
-import {Rover} from "./Rover";
 
-export class TurnLeft implements Command {
-  execute(rover: Rover): void {
-    rover.setDirection(rover.getDirection().turnLeft())
+export class TurnLeft extends Command {
+  isTurnLeft(): boolean {
+    return true
   }
 }

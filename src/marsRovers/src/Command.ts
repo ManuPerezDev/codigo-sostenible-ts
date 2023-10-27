@@ -1,5 +1,17 @@
-import {Rover} from "./Rover";
+export abstract class Command {
+  isMoveForward(): boolean {
+    return false
+  }
 
-export interface Command {
-  execute(rover: Rover): void;
+  isMoveBackward(): boolean {
+    return false
+  }
+
+  isTurnRight(): boolean {
+    return false
+  }
+
+  isTurnLeft(): boolean {
+    return false
+  }
 }

@@ -1,7 +1,7 @@
 import {Command} from "./Command";
 
-export class MoveForward implements Command {
-  execute(rover) {
-    rover.setPosition(rover.getDirection().moveForward(rover.getPosition()))
+export class MoveForward extends Command {
+  isMoveForward(): boolean {
+    return true
   }
 }

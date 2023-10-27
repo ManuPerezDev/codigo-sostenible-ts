@@ -1,6 +1,6 @@
-import {South} from "../../src/Direction/South";
-import {West} from "../../src/Direction/West";
-import {East} from "../../src/Direction/East";
+import {South} from "../../../src/domain/Direction/South";
+import {West} from "../../../src/domain/Direction/West";
+import {East} from "../../../src/domain/Direction/East";
 
 describe('South test', () => {
   it('should turn left', () => {

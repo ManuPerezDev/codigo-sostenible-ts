@@ -1,6 +1,12 @@
 import {Cell} from "./Cell";
 
 export function nextGeneration(world: Cell[][]) {
+  calculateNeighbours(world);
+
+  decidesWhoLivesAndWhoDies(world);
+}
+
+function calculateNeighbours(world: Cell[][]) {
   for (const [y, row] of world.entries()) {
     for (const [x, cell] of row.entries()) {
       const westNeighbour = world[y][x - 1]
@@ -38,7 +44,9 @@ export function nextGeneration(world: Cell[][]) {
       }
     }
   }
+}
 
+function decidesWhoLivesAndWhoDies(world: Cell[][]) {
   for (const row of world) {
     for (const cell of row) {
       if (cell.isAlive()) {

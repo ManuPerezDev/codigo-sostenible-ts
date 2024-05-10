@@ -32,9 +32,9 @@ describe('Farmer', () => {
       farmer.fill(items)
       farmer.spell()
 
-      expect(farmer.chest1).toStrictEqual(sortedMaterials)
-      expect(farmer.chest2).toStrictEqual(sortedSeeds)
-      expect(farmer.chest3).toStrictEqual(sortedFood)
+      expect(farmer.materialChest).toStrictEqual(sortedMaterials)
+      expect(farmer.seedChest).toStrictEqual(sortedSeeds)
+      expect(farmer.foodChest).toStrictEqual(sortedFood)
     })
 
     it('should empty the backpack after sorting', () => {
@@ -118,7 +118,7 @@ describe('Farmer', () => {
         { name: 'wood', quantity: 5 },
       ]
 
-      expect(farmer.chest1).toStrictEqual(sortedMaterials)
+      expect(farmer.materialChest).toStrictEqual(sortedMaterials)
     })
   })
 })

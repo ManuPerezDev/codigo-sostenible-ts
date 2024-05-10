@@ -5,125 +5,114 @@ export type Item = {
 
 export class Farmer {
   backpack: Item[] = []
-  chest1: Item[] = [] // materials
-  chest2: Item[] = [] // seeds
-  chest3: Item[] = [] // food
+  materialChest: Item[] = []
+  seedChest: Item[] = []
+  foodChest: Item[] = []
 
   fill(items: Item[]) {
-    // fill the backpack with the items passed as argument until the backpack is full (16 items)
+    const backpackCapacity = 8
     for (let i = 0; i < items.length; i++) {
-      if (this.backpack.length < 16) {
+      if (this.backpack.length < backpackCapacity) {
         this.backpack.push(items[i])
       }
     }
   }
 
   spell() {
-    // loop through the bag and store the objects in the correct chest
+    const chestCapacity = 16
+    const maxLotSize = 5
     this.backpack.forEach((item: Item) => {
       switch (item.name) {
-        //materials
         case 'wood':
         case 'stone':
         case 'coal':
         case 'cooper ore':
         case 'iron ore':
-          const items1 = this.chest1.filter(
+          const materials = this.materialChest.filter(
             (chestItem) => chestItem.name === item.name
           )
-          // if not exist any item with the same name, add the item to the chest
-          if (items1.length === 0 && this.chest1.length < 16) {
-            this.chest1.push(item)
-            // if the item is already in the chest, check if the quantity is less than 5
+          if (
+            materials.length === 0 &&
+            this.materialChest.length < chestCapacity
+          ) {
+            this.materialChest.push(item)
           } else {
-            for (let i = 0; i < items1.length; i++) {
-              if (items1[i].quantity < 5) {
-                //increment the quantity of the item in the chest while the quantity of the item in the chest is less
-                //than 5 and decrease the quantity of the item in the bag
-                while (item.quantity !== 0 && items1[i].quantity < 5) {
-                  items1[i].quantity++
+            for (let i = 0; i < materials.length; i++) {
+              if (materials[i].quantity < maxLotSize) {
+                while (
+                  item.quantity !== 0 &&
+                  materials[i].quantity < maxLotSize
+                ) {
+                  materials[i].quantity++
                   item.quantity--
                 }
               }
             }
-            //if the quantity of the item in the bag is not 0, add the item to the chest if it fit
-            if (item.quantity !== 0 && this.chest1.length < 16) {
-              this.chest1.push(item)
+            if (
+              item.quantity !== 0 &&
+              this.materialChest.length < chestCapacity
+            ) {
+              this.materialChest.push(item)
             }
           }
           break
-        //seeds
         case 'wheat seed':
         case 'potato seed':
         case 'carrot seed':
         case 'corn seed':
         case 'kale seed':
-          const items2 = this.chest2.filter(
+          const seeds = this.seedChest.filter(
             (chestItem) => chestItem.name === item.name
           )
-          // if not exist any item with the same name, add the item to the chest
-          if (items2.length === 0 && this.chest2.length < 16) {
-            this.chest2.push(item)
-            // if the item is already in the chest, check if the quantity is less than 5
+          if (seeds.length === 0 && this.seedChest.length < chestCapacity) {
+            this.seedChest.push(item)
           } else {
-            for (let i = 0; i < items2.length; i++) {
-              if (items2[i].quantity < 5) {
-                //increment the quantity of the item in the chest while the quantity of the item in the chest is less
-                //than 5 and decrease the quantity of the item in the bag
-                while (item.quantity !== 0 && items2[i].quantity < 5) {
-                  items2[i].quantity++
+            for (let i = 0; i < seeds.length; i++) {
+              if (seeds[i].quantity < maxLotSize) {
+                while (item.quantity !== 0 && seeds[i].quantity < maxLotSize) {
+                  seeds[i].quantity++
                   item.quantity--
                 }
               }
             }
-            //if the quantity of the item in the bag is not 0, add the item to the chest if it fit
-            if (item.quantity !== 0 && this.chest2.length < 16) {
-              this.chest2.push(item)
+            if (item.quantity !== 0 && this.seedChest.length < chestCapacity) {
+              this.seedChest.push(item)
             }
           }
           break
-        //food
         case 'raspberry':
         case 'apricot':
         case 'wild onion':
         case 'mushroom':
         case 'trout':
-          const items3 = this.chest3.filter(
+          const food = this.foodChest.filter(
             (chestItem) => chestItem.name === item.name
           )
-          // if not exist any item with the same name, add the item to the chest
-          if (items3.length === 0 && this.chest3.length < 16) {
-            this.chest3.push(item)
-            // if the item is already in the chest, check if the quantity is less than 5
+          if (food.length === 0 && this.foodChest.length < chestCapacity) {
+            this.foodChest.push(item)
           } else {
-            for (let i = 0; i < items3.length; i++) {
-              if (items3[i].quantity < 5) {
-                //increment the quantity of the item in the chest while the quantity of the item in the chest is less
-                //than 5 and decrease the quantity of the item in the bag
-                while (item.quantity !== 0 && items3[i].quantity < 5) {
-                  items3[i].quantity++
+            for (let i = 0; i < food.length; i++) {
+              if (food[i].quantity < maxLotSize) {
+                while (item.quantity !== 0 && food[i].quantity < maxLotSize) {
+                  food[i].quantity++
                   item.quantity--
                 }
               }
             }
-            //if the quantity of the item in the bag is not 0, add the item to the chest if it fit
-            if (item.quantity !== 0 && this.chest3.length < 16) {
-              this.chest3.push(item)
+            if (item.quantity !== 0 && this.foodChest.length < chestCapacity) {
+              this.foodChest.push(item)
             }
           }
           break
         default:
-          // if the object not in the list, do nothing
           break
       }
     })
 
-    //sort the items in the chest by name (ascending) and quantity (descending)
-    this.chest1.sort((a, b) => a.name.localeCompare(b.name))
-    this.chest2.sort((a, b) => a.name.localeCompare(b.name))
-    this.chest3.sort((a, b) => a.name.localeCompare(b.name))
+    this.materialChest.sort((a, b) => a.name.localeCompare(b.name))
+    this.seedChest.sort((a, b) => a.name.localeCompare(b.name))
+    this.foodChest.sort((a, b) => a.name.localeCompare(b.name))
 
-    //empty the backpack
     this.backpack = []
   }
 }

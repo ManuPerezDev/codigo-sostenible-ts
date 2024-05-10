@@ -19,13 +19,14 @@ export class Chest {
         }
       }
     }
+    this.sortItems()
   }
 
   private thereIsSpace(): boolean {
     return this.itemBatches.length < this.chestCapacity
   }
 
-  sort() {
+  private sortItems() {
     this.itemBatches.sort((a, b) => a.name.localeCompare(b.name))
   }
 

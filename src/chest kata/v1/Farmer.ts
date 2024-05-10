@@ -14,14 +14,8 @@ export class Farmer {
 
   spell() {
     this.materialChest.spell(this.backpack.materials())
-    this.materialChest.sort()
-
     this.seedChest.spell(this.backpack.seeds())
-    this.seedChest.sort()
-
     this.foodChest.spell(this.backpack.food())
-    this.foodChest.sort()
-
     this.backpack.empty()
   }
 }

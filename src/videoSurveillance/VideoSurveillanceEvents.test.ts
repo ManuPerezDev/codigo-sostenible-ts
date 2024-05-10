@@ -35,8 +35,8 @@ class Orchestrator {
 
 describe('Video Recorder', () => {
   it('start video recording when movement is detected', () => {
-    let sensorDouble = new SensorDouble();
-    let videoRecorderDouble = new VideoRecorderDouble();
+    const sensorDouble = new SensorDouble();
+    const videoRecorderDouble = new VideoRecorderDouble();
     const orchestrator = new Orchestrator(
       sensorDouble,
       videoRecorderDouble
@@ -49,8 +49,8 @@ describe('Video Recorder', () => {
   });
 
   it('start video recording when movement is detected with jest mocks', async () => {
-    let fakeSensor = new SensorDouble();
-    let fakeVideoRecorder = {start: jest.fn()};
+    const fakeSensor = new SensorDouble();
+    const fakeVideoRecorder = {start: jest.fn()};
     const orchestrator = new Orchestrator(
       fakeSensor,
       fakeVideoRecorder

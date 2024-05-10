@@ -65,8 +65,8 @@ function createDiagnosis(id: number, location: string): Diagnosis {
 
 function casesWithDiagnoses() {
   let diagnosisId = 0;
-  let diagnoses: Diagnosis[] = [];
-  let cases: Case[] = [];
+  const diagnoses: Diagnosis[] = [];
+  const cases: Case[] = [];
 
   const add = (location: string, patientName: string) => {
     diagnosisId++;

@@ -4,7 +4,7 @@ import { Dictionary } from "./Dictionary";
 
 export class TemplateEngine {
   static fill(template: Template, dictionary: Dictionary) {
-    let filledTemplate = this.fillTemplate(template, dictionary);
+    const filledTemplate = this.fillTemplate(template, dictionary);
 
     if (this.thereAreRemainingMarkedText(filledTemplate)) {
       throw new MissingDictionaryKeyError()

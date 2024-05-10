@@ -1,4 +1,4 @@
-import {AgedBrie, BackstagePasses, GildedRose, Item, RegularItem, Sulfuras} from "./GildedRose";
+import {AgedBrie, BackstagePasses, GildedRose, RegularItem, Sulfuras} from "./GildedRose";
 
 describe('Gilded Rose', () => {
   it('should Sulfuras, Hand of Ragnaros', () => {
@@ -6,7 +6,7 @@ describe('Gilded Rose', () => {
     const sellIn = 50;
     const quality = 51;
     const gildedRose = new GildedRose([
-      new Sulfuras({ name, sellIn, quality })
+      new Sulfuras({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();
@@ -21,7 +21,7 @@ describe('Gilded Rose', () => {
     const sellIn = 0;
     const quality = 51;
     const gildedRose = new GildedRose([
-      new BackstagePasses({ name, sellIn, quality })
+      new BackstagePasses({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();
@@ -36,7 +36,7 @@ describe('Gilded Rose', () => {
     const sellIn = 50;
     const quality = 51;
     const gildedRose = new GildedRose([
-      new BackstagePasses({ name, sellIn, quality })
+      new BackstagePasses({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();
@@ -51,7 +51,7 @@ describe('Gilded Rose', () => {
     const sellIn = 10;
     const quality = 49;
     const gildedRose = new GildedRose([
-      new BackstagePasses({ name, sellIn, quality })
+      new BackstagePasses({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();
@@ -66,7 +66,7 @@ describe('Gilded Rose', () => {
     const sellIn = 5;
     const quality = 49;
     const gildedRose = new GildedRose([
-      new BackstagePasses({ name, sellIn, quality })
+      new BackstagePasses({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();
@@ -81,7 +81,7 @@ describe('Gilded Rose', () => {
     const sellIn = 50;
     const quality = 51;
     const gildedRose = new GildedRose([
-      new AgedBrie({ name, sellIn, quality })
+      new AgedBrie({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();
@@ -96,7 +96,7 @@ describe('Gilded Rose', () => {
     const sellIn = 50;
     const quality = 49;
     const gildedRose = new GildedRose([
-      new AgedBrie({ name, sellIn, quality })
+      new AgedBrie({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();
@@ -111,7 +111,7 @@ describe('Gilded Rose', () => {
     const sellIn = 0;
     const quality = 49;
     const gildedRose = new GildedRose([
-      new AgedBrie({ name, sellIn, quality })
+      new AgedBrie({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();
@@ -126,7 +126,7 @@ describe('Gilded Rose', () => {
     const sellIn = 1;
     const quality = 1;
     const gildedRose = new GildedRose([
-      new RegularItem({ name, sellIn, quality })
+      new RegularItem({name, sellIn, quality})
     ]);
 
     const items = gildedRose.updateQuality();

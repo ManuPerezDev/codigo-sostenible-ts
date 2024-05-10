@@ -4,18 +4,18 @@ export class Chest {
   itemBatches: ItemBatch[] = []
   private chestCapacity = 16
 
-  put(backpackItemBatch: ItemBatch) {
-    const itemBatchesFromBackpack = this.filterItemsOfType(backpackItemBatch)
+  spell(backpackItemBatches: ItemBatch[]) {
+    for (const backpackItemBatch of backpackItemBatches) {
+      const itemBatchesFromBackpack = this.filterItemsOfType(backpackItemBatch)
 
-    if (backpackItemBatch.isNotEmpty() && this.thereIsSpace()) {
-      this.itemBatches.push(backpackItemBatch)
-    }
+      if (this.thereIsSpace()) {
+        this.itemBatches.push(backpackItemBatch)
+      }
 
-    for (const itemBatch of itemBatchesFromBackpack) {
-      if (itemBatch.isNotFull()) {
-        for (let j = 0; backpackItemBatch.isNotEmpty() && itemBatch.isNotFull(); j++) {
-          itemBatch.add()
-          backpackItemBatch.remove()
+      for (const itemBatch of itemBatchesFromBackpack) {
+        if (itemBatch.isNotEmpty() && itemBatch.isNotFull()) {
+          itemBatch.addItem()
+          backpackItemBatch.removeItem()
         }
       }
     }

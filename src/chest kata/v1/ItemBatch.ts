@@ -20,11 +20,11 @@ export class ItemBatch {
     return this.quantity !== 0
   }
 
-  add() {
+  addItem() {
     this.quantity++
   }
 
-  remove() {
+  removeItem() {
     this.quantity--
   }
 }

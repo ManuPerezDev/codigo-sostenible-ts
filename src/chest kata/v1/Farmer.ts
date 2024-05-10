@@ -13,19 +13,13 @@ export class Farmer {
   }
 
   spell() {
-    for (const item of this.backpack.materials()) {
-      this.materialChest.put(item)
-    }
+    this.materialChest.spell(this.backpack.materials())
     this.materialChest.sort()
 
-    for (const item of this.backpack.seeds()) {
-      this.seedChest.put(item)
-    }
+    this.seedChest.spell(this.backpack.seeds())
     this.seedChest.sort()
 
-    for (const item of this.backpack.food()) {
-      this.foodChest.put(item)
-    }
+    this.foodChest.spell(this.backpack.food())
     this.foodChest.sort()
 
     this.backpack.empty()

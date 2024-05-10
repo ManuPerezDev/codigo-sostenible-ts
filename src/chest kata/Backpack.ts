@@ -1,10 +1,10 @@
-import { ItemLot } from './ItemLot'
+import { ItemBatch } from './ItemBatch'
 
 export class Backpack {
-  items: ItemLot[] = []
+  items: ItemBatch[] = []
   private backpackCapacity = 8
 
-  fill(items: ItemLot[]) {
+  fill(items: ItemBatch[]) {
     for (let i = 0; i < items.length; i++) {
       if (this.items.length < this.backpackCapacity) {
         this.items.push(items[i])

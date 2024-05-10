@@ -1,34 +1,35 @@
-import { ItemLot } from './ItemLot'
+import { ItemBatch } from './ItemBatch'
 
 export class Chest {
-  items: ItemLot[] = []
+  itemBatches: ItemBatch[] = []
   private chestCapacity = 16
-  private maxLotSize = 5
 
-  put(backpackItemLot: ItemLot) {
-    const itemsLot = this.filterItemsOfType(backpackItemLot)
-    if (itemsLot.length === 0 && this.items.length < this.chestCapacity) {
-      this.items.push(backpackItemLot)
-    } else {
-      for (let i = 0; i < itemsLot.length; i++) {
-        if (itemsLot[i].quantity < this.maxLotSize) {
-          while (backpackItemLot.quantity !== 0 && itemsLot[i].quantity < this.maxLotSize) {
-            itemsLot[i].quantity++
-            backpackItemLot.quantity--
-          }
+  put(backpackItemBatch: ItemBatch) {
+    const itemBatchesFromBackpack = this.filterItemsOfType(backpackItemBatch)
+
+    if (backpackItemBatch.isNotEmpty() && this.thereIsSpace()) {
+      this.itemBatches.push(backpackItemBatch)
+    }
+
+    for (const itemBatch of itemBatchesFromBackpack) {
+      if (itemBatch.isNotFull()) {
+        for (let j = 0; backpackItemBatch.isNotEmpty() && itemBatch.isNotFull(); j++) {
+          itemBatch.add()
+          backpackItemBatch.remove()
         }
-      }
-      if (backpackItemLot.quantity !== 0 && this.items.length < this.chestCapacity) {
-        this.items.push(backpackItemLot)
       }
     }
   }
 
-  sort() {
-    this.items.sort((a, b) => a.name.localeCompare(b.name))
+  private thereIsSpace(): boolean {
+    return this.itemBatches.length < this.chestCapacity
   }
 
-  private filterItemsOfType(itemLot: ItemLot): ItemLot[] {
-    return this.items.filter((chestItem) => chestItem.equals(itemLot))
+  sort() {
+    this.itemBatches.sort((a, b) => a.name.localeCompare(b.name))
+  }
+
+  private filterItemsOfType(itemBatch: ItemBatch): ItemBatch[] {
+    return this.itemBatches.filter((chestBatch) => chestBatch.equals(itemBatch))
   }
 }

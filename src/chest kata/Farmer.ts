@@ -1,6 +1,6 @@
 import { Chest } from './Chest'
 import { Backpack } from './Backpack'
-import { ItemLot } from './ItemLot'
+import { ItemBatch } from './ItemBatch'
 
 export class Farmer {
   backpack: Backpack = new Backpack()
@@ -8,7 +8,7 @@ export class Farmer {
   seedChest: Chest = new Chest()
   foodChest: Chest = new Chest()
 
-  fill(items: ItemLot[]) {
+  fill(items: ItemBatch[]) {
     this.backpack.fill(items)
   }
 
